@@ -1,0 +1,63 @@
+                                                    MODELS
+insert  class name from apps.py in settings.py in project file 
+python manage.py shell
+python manage.py makemigrations                           //Comparing the changes to be made in the models
+python manage.py makemigrations <App_name>                //Comparing the changes to be made in the models of the specific app
+python manage.py showmigrations                           //Display the migrations made
+python manage.py migrate                                  //Creates a database in db.sqlite3
+python manage.py migrate <App_name> <File_number> --plan  //Display the changes that will be made and reverted
+python manage.py migrate <App_name> <File_number>         //Make the changes but only in the database
+python manage.py sqlmigrate <App_name> <File_number>      //The SQL commands will be displayed for the made changes
+del db.sqlite3                                            // To delete all the databases in sqlite3
+
+<class_name>.objects.all()                                //return all the entries from the data base
+<class_name>.objects.filter(<column_name> = <condition>)  //Filter the data according to the condition
+<obj> = <class_name>.objects.create()                     //creates an entry in the database
+<obj> = <class_name>.objects.get(pk=2)                    //to update the entry
+<obj>.save()                                              //to save the updated entry
+<obj>.delete()                                            //to delete the row from the get command entry
+
+                                                USERS AND GROUPS
+python manage.py shell
+from django.contrib.auth.models import User
+user = User.objects.create_user(<name>,<email>,<password>)
+user_name = User.objects.get(username='<name>')
+<username>.user_permissions.add('<app_name>.add_menu')     //Permission to add the menu
+<username>.user_permissions.add('<app_name>.change_menu')  //Permission to change the menu
+<username>.user_permissions.add('<app_name>.delete_menu')  //Permission to delete the menu
+<username>.user_permissions.add('<app_name>.view_menu')    //Permission to view the menu
+
+<username>.has_perm('<App_name>.add.<model_name>)    //Return true if the user has the permission to add into the model
+<username>.has_perm('<App_name>.change.<model_name>) //Return true if the user has the permission to change into the model
+<username>.has_perm('<App_name>.delete.<model_name>) //Return true if the user has the permission to delete into the model
+<username>.has_perm('<App_name>.view.<model_name>)   //Return true if the user has the permission to view into the model
+
+                                        TO SET MYSQL DATABASE IN DJANGO
+pip install mysql               //requirements
+pip install mysqlclient         //requirements
+mysql -u root -p                //to open mysql shell
+show databases;
+create database <name>;
+use littlelemon;
+show tables;
+CREATE USER 'admindjango'@'localhost' IDENTIFIED BY 'password'; //to create a user
+GRANT ALL ON *.* TO 'admindjango'@'localhost';                  //to grant all permissions to user
+flush privileges;                                                
+exit                                                            //exit the shell
+python manage.py makemigrations
+python manage.py migrate
+
+                                            STEPS TO CREATE A TEMPLATE
+create a function using render function in views.py file at the app level
+insert the path of the function in views.py file inside url.py file at the app level
+update setting.py file of the project folder
+Now make a template folder outside the app and the project folder and make the .html file
+
+
+                                                    TO PERFORM TESTS
+python manage.py test                                                                    //For all
+python manage.py test <name_of_model>                                                    //To run all tests within a specific package
+python manage.py test <name_of_model>.tests.<name_of_function_in_test.py>                //To run a specific test case
+python manage.py test <name_of_model>.tests.<name_of_function_in_test.py>.<test_method>  //To run a specific test method
+
+<img src="{% static'img/grill.jpg' %}">

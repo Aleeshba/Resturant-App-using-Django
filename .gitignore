@@ -1,0 +1,4 @@
+virtual_env/
+manage.py
+db.sqlite3
+__pycache__

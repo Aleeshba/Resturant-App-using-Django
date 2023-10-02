@@ -1,0 +1,66 @@
+pip install pipenv //To create virtual envorinment
+pipenv shell //To activate virtual environment in command prompt
+install required modules or packages inside the virtual environment using pipenv instead of pip
+django-admin startproject <name_of_project>   //To create the project
+python manage.py startapp <name_of_app>   //To create the app
+python manage.py runserver   //To start the development server
+python manage.py runserver <port_no>   //To start the development server at specific port
+python -m django startapp <App_name_with_path> //To create an app. The default destination will be current working directory but it should be created inside the project directory
+pipenv install djangorestframework    //To install djangorestframework (DRF)
+include 'rest_framework' in the INSTALLEDAPPS in settings.py   
+pipenv install django-debug-toolbar        //To install django-debug-toolbar
+pipenv install djangorestframework-xml     //To install djangorestframework xml
+pipenv install djangorestframework-csv     //To install djangorestframework csv
+pipenv install djangorestframework-yaml    //To install djangorestframework yaml
+include 'debug_toolbar' in the INSTALLEDAPPS in settings.py   
+include 'rest_framework.authtoken' in the INSTALLEDAPPS in settings.py for authentication and make migrations
+"DEFAULT_AUTHENTICATION_CLASSES":[                          and include this in REST_FRAMEWORK section in settings.py
+        'rest_framework_simplejwt.authentication.JWTAuthentication',   # this one is used for Josen web token based authentication 
+        'rest_framework.authentication.TokenAuthentication',           # this one for token based authentication
+        'rest_framework.authentication.SessionAuthentication',         # to use the Django admin login simultaneously with a browsable API view of Djoser but it should be removed in the production
+    ],   
+include 'debug_toolbar.middleware.DebugToolbarMiddleware', in the MIDDLEWARE in settings.py
+include INTERNAL_IPS = ['127.0.0.1'] this IP address in settings.py   
+"path('__debug__/',include('debug_toolbar.urls'))"  //include this urlpattern in the project urls.py
+REST_FRAMEWORK = {                   //include in settings.py for different render types
+    'DEFAULT_RENDERER_CLASSES':{
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_xml.renderers.XMLRenderer',
+        'rest_framework_csv.renderers.CSVRenderer', 
+        'rest_framework_yaml.renderers.YAMLRenderer', 
+    }
+}
+pipenv install bleach     //for data sanitization
+pipenv install django-filter     //for data filtering
+pipenv install djoser     //library for data authentication and authorization
+include 'djoser' in INSTALLEDAPPS after the rest_framework APPS
+DJOSER = {                         //and this in settings.py file
+    "USER_ID_FIELD":"username"
+}
+'DEFAULT_THROTTLE_CLASSES': [      # include this in REST_FRAMEWORK in settings.py so that the API can be called for limited number of times
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+
+"DEFAULT_THROTTLE_RATES":{      # setting throttle rates for authenticated or anonymous users
+        'anon': '2/minute',
+        'user': '5/minute',
+        'ten' : '10/minute',
+    },
+pipenv install djangorestframework-simplejwt~=5.2.1      
+include 'rest_framework_simplejwt' in INSTALLEDAPPS after the rest_framework APPS
+include 'rest_framework_simplejwt.token_blacklist' in INSTALLEDAPPS after the rest_framework APPS  and run migrations
+  
+SIMPLE_JWT = {     # include in settings.py to set time limit for access token
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5)
+}
+
+https://www.littlelemom.com/menu/2022/summer
+<scheme><sub-domain><secondleveldomain><topleveldomain><parameter>
+
+https://www.littlelemom.com/menu/?year=2022&menu=summer
+<scheme><sub-domain><secondleveldomain><topleveldomain><querystring>
+
+python manage.py createsuperuser
+
