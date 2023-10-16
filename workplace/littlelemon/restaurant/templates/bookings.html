@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 <section>
   <article>
-    <h1>All Reservations</h1>
+    <h1 style="padding-bottom: 20px;" id="top"></h1>
     <!--Begin row-->
     <div class="row">
       <!--Begin col-->
       <div class="column">
-        <pre id="bookings"></pre>
+        <div id="bookings"></div>
       </div>
       <!--End col-->
 
@@ -28,10 +27,29 @@
   </article>
 </section>
 <script>
-  const bookings = JSON.parse('{{ bookings|safe }}')
-  console.log(bookings);
-  const pretty_json = JSON.stringify(bookings,null,2)
-  document.getElementById('bookings').innerHTML = pretty_json
+  const bookings = JSON.parse('{{ bookings|safe }}');
+  let str = "";
+  if(bookings[0]===undefined){
+    document.getElementById('top').innerText = "No Reservations!";
+  }
+  else{
+    document.getElementById('bookings').innerText = "All Reservations";
+  }
+  for (let i = 0; bookings[i]!==undefined; i++) {
+    let data = {
+      'Name': bookings[i]['fields']['first_name'],
+      'Reservation_Date': bookings[i]['fields']['reservation_date'],
+      'Reservation_Time': bookings[i]['fields']['reservation_slot'],
+    };
+    str += `<div>
+        <p><b>Id: </b>${i+1}</p>
+        <p><b>Name: </b>${data.Name}</p>
+        <p><b>Reservation Date: </b>${data.Reservation_Date}</p>
+        <p><b>Reservation Slot: </b>${data.Reservation_Time}</p>
+        </div>
+        <hr>`;
+  }
+  document.getElementById('bookings').innerHTML = str;
 </script>
 {% endblock %}
 
